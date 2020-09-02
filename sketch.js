@@ -1,18 +1,34 @@
-let x = 0;
+let x = 450;
 let speed = 3;
+let z = 0;
 
-function setup() {
-  createCanvas(400,400);
-  // put setup code here
+//keyPressed();
+
+function setup(){
+    createCanvas(windowWidth, windowHeight);
+    background(255,100,180);
+    z = windowWidth;
 }
 
 function draw() {
-  background(100,100,100);
-  fill(20,30,100);
-  rect(x,100,100,100);
+    
+    ellipse(x,mouseY,100,100);
+    stroke(22);
 
-  if (x + 100 > width){
-    speed = (-1*speed);
-  }
-  x = x + speed;
+    if (x > width || x < 50){
+        speed = -speed;
+    }
+    x = x+speed;
+
+    if (mouseIsPressed){
+        fill(255,100,180,20);
+    }
+    print(z);
 }
+
+// function keyPressed(){
+//     if (value = 1){
+//         saveCanvas('images/01','png');
+//     }
+// }
+
