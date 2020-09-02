@@ -5,4 +5,8 @@ html, body {
   canvas {
     display: block;
   }
+  #name {
+    margin-top: 50px;
+    margin-bottom: 30px;
+  }
   
