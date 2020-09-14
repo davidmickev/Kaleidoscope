@@ -47,7 +47,9 @@ function setup() {
 
   strokeEndSlider = createButton('Fill Opacity(end)');
   strokeEnd = createSlider(0, 125, 100, 1);
-  
+
+  colorSlider = createButton('Color Change Rate');
+  colorAmount = createSlider(0, .1, .025, .005);
 }
 
 // Save File Function
@@ -76,16 +78,25 @@ function sleep(milliseconds) {
 
 function keyPressed() {
   //pause
-  if (keyCode = 80) {
+  if (keyCode == 80) {
     play = !play;
   }
   //symmetry 
-  if (keyCode = 90){
-    symmetry+=1;
+  // z
+  else if (keyCode == 90){
+    if(symmetry > 3){
+      this.symmetry +=1 ;
+      //this.symmetry = this.symmetry + 1;
+      print(this.symmetry);
+      //draw();
+    }
   }
-  if (keyCode = 88){
-    symmetry-=1;
+  // x
+  else if (keyCode == 88){
+    this.symmetry-=1;
+    draw();
   }
+  print(keyCode);
 }
 
 function getRandomRgb() {
@@ -126,8 +137,6 @@ function draw() {
   // Lazy pause method
   if (play) {
 
-    print("sleep: ", +sleepTime);
-
     sleep(sleepTime.value());
     translate(width / 2, height / 2);
 
@@ -147,18 +156,14 @@ function draw() {
         this.randomRgb2 = getRandomRgb();
         this.randomRgb3 = getRandomRgb();
       }
+      amt += colorAmount.value();
 
-      amt += .025;
       // With each cycle, increment xoff
       xoff += xincrement;
 
       // IMAGE Draw
       for (let i = 0; i < symmetry; i++) {
         let n = noise(xoff) * width; //hmmmm
-
-        // if (mouseIsPressed) {
-        //   //this.symmetry++
-        // }
 
         rotate(angle);
         strokeWeight(sizeSlider.value());
@@ -202,7 +207,6 @@ function draw() {
         // rect(n/2, n/2, mx, my);
         //variableEllipse(mouseX/2, mouseY/2, pmouseX/2, pmouseY/2);
         variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
-
         pop();
       }
     }
