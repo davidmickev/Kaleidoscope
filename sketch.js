@@ -13,13 +13,6 @@ let xincrement = 0.01;
 
 //for lerp color
 let amt = 0.0;
-let colorPallets = [
-  ["#4C5B5C", "#FF715B", "#F9CB40", "#BCED09", "#2F52E0"],
-  ["#0D1821", "#344966", "#E6AACE", "#F0F4EF", "#BFCC94"],
-  ["#BFCC94", "#F7717D", "#DE639A", "#7F2982", "#16001E"],
-  ["#16001E", "#BDADEA", "#BEA2C2", "#A37871", "#4E4B5C"],
-  ["#2E4939", "#4CAF9C", "#F4994B", "#F44731", "#7B1516"],
-];
 
 function setup() {
   createCanvas(920, 920);
@@ -82,8 +75,16 @@ function sleep(milliseconds) {
 }
 
 function keyPressed() {
+  //pause
   if (keyCode = 80) {
     play = !play;
+  }
+  //symmetry 
+  if (keyCode = 90){
+    symmetry+=1;
+  }
+  if (keyCode = 88){
+    symmetry-=1;
   }
 }
 
@@ -190,7 +191,13 @@ function draw() {
           line(mx, my, pmx, pmy);
         }
 
-        ellipse(n / 2, n / 2, mx, my);
+        //ellipse(n / 2, n / 2, mx, my);
+
+        // triangle(x, 180, x, 390, y, 290)
+        // x = x + speed
+        // y = y + speed
+        // if (y > width || x < 0) {
+        // speed = speed * -1
         // triangle(pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy)
         // rect(n/2, n/2, mx, my);
         //variableEllipse(mouseX/2, mouseY/2, pmouseX/2, pmouseY/2);
