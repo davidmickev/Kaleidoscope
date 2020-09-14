@@ -39,12 +39,22 @@ function setup() {
   fullscreenButton.mousePressed(screenFull);
 
   // Setting up the slider for the thickness of the brush
-  brushSizeSlider = createButton('Brush Size Slider');
+  brushSizeSlider = createButton('Stroke Brush Size');
   sizeSlider = createSlider(1, 32, 2, 0.1);
 
   // Setting up the slider for sleep() function
-  sleepSlider = createButton('Sleep (Draw Update) Slider');
+  sleepSlider = createButton('Sleep (Draw Update)');
   sleepTime = createSlider(0, 200, 20, 2);
+
+  strokeSlider = createButton('Stroke Border Opacity');
+  strokeOuter = createSlider(0, 125, 70, 1);
+
+  strokeStartSlider = createButton('Fill Opacity(start)');
+  strokeStart = createSlider(0, 125, 30, 1);
+
+  strokeEndSlider = createButton('Fill Opacity(end)');
+  strokeEnd = createSlider(0, 125, 100, 1);
+  
 }
 
 // Save File Function
@@ -102,7 +112,7 @@ function star(x, y, radius1, radius2, npoints) {
 
 function variableEllipse(x, y, px, py) {
   let speed = abs(x - px) + abs(y - py);
-  stroke(speed);
+  //stroke(speed);
   ellipse(x, y, speed, speed);
 }
 
@@ -127,8 +137,8 @@ function draw() {
       let pmy = pmouseY - height / 2;
 
       //random color and all opacities
-      let from = color(randomRgb2[0], randomRgb2[1], randomRgb2[2], 1);
-      let to = color(randomRgb3[0], randomRgb3[1], randomRgb3[2], 75);
+      let from = color(randomRgb2[0], randomRgb2[1], randomRgb2[2], strokeStart.value());
+      let to = color(randomRgb3[0], randomRgb3[1], randomRgb3[2], strokeEnd.value());
 
       if (amt >= 1.0) {
         amt = 0.0;
@@ -151,8 +161,7 @@ function draw() {
 
         rotate(angle);
         strokeWeight(sizeSlider.value());
-
-        stroke(randomRgb[0], randomRgb[1], randomRgb[2],30);
+        stroke(randomRgb[0], randomRgb[1], randomRgb[2],strokeOuter.value());
 
         // SHAPES
 
@@ -167,6 +176,8 @@ function draw() {
         //triangle(pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100)
         //triangle(mx+my,mx+my,mx+my,mx+my,mx+my,mx+my)
         //triangle(x1, y1, x2, y2, x3, y3)
+        variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
+        //variableEllipse(mouseX/2, mouseY/2, pmouseX/2, pmouseY/2);
 
         push();
 
@@ -180,9 +191,10 @@ function draw() {
         }
 
         ellipse(n / 2, n / 2, mx, my);
-        //triangle(pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy)
+        // triangle(pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy)
         // rect(n/2, n/2, mx, my);
-        // ellipse(n,my,20,20);
+        //variableEllipse(mouseX/2, mouseY/2, pmouseX/2, pmouseY/2);
+        variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
 
         pop();
       }
