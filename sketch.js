@@ -1,11 +1,11 @@
 // Symmetry corresponding to the number of reflections. Change the number for different number of reflections 
-let symmetry = 6;   
+let symmetry = 6;
+
+let play = true;
 
 let angle = 360 / symmetry;
 let saveButton, clearButton, mouseButton, keyboardButton;
 let slider;
-
-let play = true;
 
 // noise functionality TODO: slider?
 let xoff = 0.0;
@@ -21,10 +21,10 @@ let colorPallets = [
   ["#2E4939", "#4CAF9C", "#F4994B", "#F44731", "#7B1516"],
 ];
 
-function setup() { 
+function setup() {
   createCanvas(920, 920);
   angleMode(DEGREES);
-  background(127);
+  background('white');
 
   // Creating the save button for the file
   saveButton = createButton('save');
@@ -44,8 +44,7 @@ function setup() {
 
   // Setting up the slider for sleep() function
   sleepSlider = createButton('Sleep (Draw Update) Slider');
-  sleepTime = createSlider(0,5000,10,10);
-  
+  sleepTime = createSlider(0, 200, 20, 2);
 }
 
 // Save File Function
@@ -55,7 +54,7 @@ function saveFile() {
 
 // Clear Screen function
 function clearScreen() {
-  background(127);
+  background('white');
 }
 
 // Full Screen Function
@@ -73,73 +72,120 @@ function sleep(milliseconds) {
 }
 
 function keyPressed() {
-  if (keyCode = 80){
+  if (keyCode = 80) {
     play = !play;
   }
 }
 
+function getRandomRgb() {
+  var num = Math.round(0xffffff * Math.random());
+  var r = num >> 16;
+  var g = num >> 8 & 255;
+  var b = num & 255;
+  return [r, g, b];
+}
+
+function star(x, y, radius1, radius2, npoints) {
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius2;
+    let sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a + halfAngle) * radius1;
+    sy = y + sin(a + halfAngle) * radius1;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
+function variableEllipse(x, y, px, py) {
+  let speed = abs(x - px) + abs(y - py);
+  stroke(speed);
+  ellipse(x, y, speed, speed);
+}
+
+var randomRgb = getRandomRgb();
+var randomRgb2 = getRandomRgb();
+var randomRgb3 = getRandomRgb();
+
+
 function draw() {
-
-  // Debug
-  //print(sleepTime);
-  
   // Lazy pause method
-  if (play){
+  if (play) {
 
-  sleep(sleepTime);
-  translate(width / 2, height / 2);
+    print("sleep: ", +sleepTime);
 
-  if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
-    let mx = mouseX - width / 2;
-    let my = mouseY - height / 2;
-    let pmx = pmouseX - width / 2;
-    let pmy = pmouseY - height / 2;
+    sleep(sleepTime.value());
+    translate(width / 2, height / 2);
 
+    if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+      let mx = mouseX - width / 2;
+      let my = mouseY - height / 2;
+      let pmx = pmouseX - width / 2;
+      let pmy = pmouseY - height / 2;
 
-    // let from = color(218, 165, 32);
-    // let to = color(72, 61, 139);
-    let from = color(218, 165, 32,.9);
-    let to = color(72, 61, 139,.9);
+      //random color and all opacities
+      let from = color(randomRgb2[0], randomRgb2[1], randomRgb2[2], 1);
+      let to = color(randomRgb3[0], randomRgb3[1], randomRgb3[2], 75);
 
-    if (amt>=1.0){
-      amt = 0.0;
-    }
-    amt += .01;
+      if (amt >= 1.0) {
+        amt = 0.0;
+        this.randomRgb = getRandomRgb();
+        this.randomRgb2 = getRandomRgb();
+        this.randomRgb3 = getRandomRgb();
+      }
 
-    // With each cycle, increment xoff
-    xoff += xincrement;
-    
-    
+      amt += .025;
+      // With each cycle, increment xoff
+      xoff += xincrement;
+
+      // IMAGE Draw
       for (let i = 0; i < symmetry; i++) {
-        let n = noise(xoff) * width;
+        let n = noise(xoff) * width; //hmmmm
 
-        if (mouseIsPressed) {symmetry++}
+        // if (mouseIsPressed) {
+        //   //this.symmetry++
+        // }
 
         rotate(angle);
-        let sw = sizeSlider.value();
-        strokeWeight(sw);
+        strokeWeight(sizeSlider.value());
 
-        //line(mx, my, pmx, pmy);
-        //sphere(mx, my, 4);
-        // ellipse(n,my,20,20);
-        // fill(100);
+        stroke(randomRgb[0], randomRgb[1], randomRgb[2],30);
 
-        fill(lerpColor(from,to,amt));
-        ellipse(n/2, n / 2, mx, my);
+        // SHAPES
+
+        fill(lerpColor(from, to, amt));
+
+        if (mouseIsPressed) {
+          line(mx, my, pmx, pmy);
+        }
+
+        ellipse(n / 2, n / 2, mx, my);
+        //rect(n/2, n/2, mx, my);
+        //triangle(pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100)
+        //triangle(mx+my,mx+my,mx+my,mx+my,mx+my,mx+my)
+        //triangle(x1, y1, x2, y2, x3, y3)
+
         push();
 
         scale(1, -1);
-        //line(n, my, pmx, pmy);
-        //noStroke();
+        fill(lerpColor(from, to, amt));
 
-        //sphere(mx, my, 4);
+        // SHAPES
 
-        fill(lerpColor(from,to,amt));
-        ellipse(n /2, n / 2, mx, my);
+        if (mouseIsPressed) {
+          line(mx, my, pmx, pmy);
+        }
+
+        ellipse(n / 2, n / 2, mx, my);
+        //triangle(pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy)
+        // rect(n/2, n/2, mx, my);
         // ellipse(n,my,20,20);
-        // fill(100);
+
         pop();
       }
+    }
   }
-}
 }
