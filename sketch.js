@@ -1,9 +1,9 @@
 // Symmetry corresponding to the number of reflections. Change the number for different number of reflections 
 let symmetry = 6;
+let angle = 360 / symmetry;
 
 let play = true;
 
-let angle = 360 / symmetry;
 let saveButton, clearButton, mouseButton, keyboardButton;
 let slider;
 
@@ -50,6 +50,12 @@ function setup() {
 
   colorSlider = createButton('Color Change Rate');
   colorAmount = createSlider(0, .1, .025, .005);
+
+  noiseSlider = createButton('xNoise');
+  xoffAmount = createSlider(0, 1, 0, .005);
+
+  noiseSlider2 = createButton('Noise Incriment');
+  noiseIncriment = createSlider(0, 1, .01, .01);
 }
 
 // Save File Function
@@ -82,21 +88,16 @@ function keyPressed() {
     play = !play;
   }
   //symmetry 
-  // z
-  else if (keyCode == 90){
-    if(symmetry > 3){
-      this.symmetry +=1 ;
-      //this.symmetry = this.symmetry + 1;
-      print(this.symmetry);
-      //draw();
+  else if (keyCode == 90) { // z
+    symmetry += 1;
+    angle = 360 / symmetry;
+  }
+  else if (keyCode == 88) { // x
+    if (symmetry > 3) {
+      symmetry -= 1;
+      angle = 360 / symmetry;
     }
   }
-  // x
-  else if (keyCode == 88){
-    this.symmetry-=1;
-    draw();
-  }
-  print(keyCode);
 }
 
 function getRandomRgb() {
@@ -111,6 +112,7 @@ function star(x, y, radius1, radius2, npoints) {
   let angle = TWO_PI / npoints;
   let halfAngle = angle / 2.0;
   beginShape();
+
   for (let a = 0; a < TWO_PI; a += angle) {
     let sx = x + cos(a) * radius2;
     let sy = y + sin(a) * radius2;
@@ -132,8 +134,13 @@ var randomRgb = getRandomRgb();
 var randomRgb2 = getRandomRgb();
 var randomRgb3 = getRandomRgb();
 
-
 function draw() {
+
+  
+
+  print("xOff: " + xoffAmount.value() + " incriment: " + noiseIncriment.value());
+
+  
   // Lazy pause method
   if (play) {
 
@@ -152,22 +159,28 @@ function draw() {
 
       if (amt >= 1.0) {
         amt = 0.0;
-        this.randomRgb = getRandomRgb();
-        this.randomRgb2 = getRandomRgb();
-        this.randomRgb3 = getRandomRgb();
+        randomRgb = getRandomRgb();
+        randomRgb2 = getRandomRgb();
+        randomRgb3 = getRandomRgb();
       }
       amt += colorAmount.value();
 
+      let n = noise(xoff) * width; 
+
       // With each cycle, increment xoff
       xoff += xincrement;
+      
+
+      print("real: "+ xoff + "and: ", xincrement);
+      //if(xoff )
+      
 
       // IMAGE Draw
       for (let i = 0; i < symmetry; i++) {
-        let n = noise(xoff) * width; //hmmmm
 
         rotate(angle);
         strokeWeight(sizeSlider.value());
-        stroke(randomRgb[0], randomRgb[1], randomRgb[2],strokeOuter.value());
+        stroke(randomRgb[0], randomRgb[1], randomRgb[2], strokeOuter.value());
 
         // SHAPES
 
@@ -177,7 +190,7 @@ function draw() {
           line(mx, my, pmx, pmy);
         }
 
-        ellipse(n / 2, n / 2, mx, my);
+        ellipse(n/2, n/2, mx, my);
         //rect(n/2, n/2, mx, my);
         //triangle(pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100)
         //triangle(mx+my,mx+my,mx+my,mx+my,mx+my,mx+my)
@@ -196,7 +209,7 @@ function draw() {
           line(mx, my, pmx, pmy);
         }
 
-        //ellipse(n / 2, n / 2, mx, my);
+        ellipse(n / 2, n / 2, mx, my);
 
         // triangle(x, 180, x, 390, y, 290)
         // x = x + speed
