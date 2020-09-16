@@ -113,7 +113,11 @@ function keyPressed() {
   else if (keyCode == 84){ // t
     t = !t;
   }
-
+  else if (keyCode == 65){ // a
+    e = !e;
+    r = !r;
+    t = !t;
+  }
 }
 
 function getRandomRgb() {
@@ -151,15 +155,7 @@ var randomRgb2 = getRandomRgb();
 var randomRgb3 = getRandomRgb();
 
 function draw() {
-
-  
-
-  print("xOff: " + xoffAmount.value() + " incriment: " + noiseIncriment.value());
-
-  
-  // Lazy pause method
   if (play) {
-
     sleep(sleepTime.value());
     translate(width / 2, height / 2);
 
@@ -186,14 +182,11 @@ function draw() {
       // With each cycle, increment xoff
       xoff += xincrement;
       
-
       print("real: "+ xoff + "and: ", xincrement);
       //if(xoff )
       
-
       // IMAGE Draw
       for (let i = 0; i < symmetry; i++) {
-
         rotate(angle);
         strokeWeight(sizeSlider.value());
         stroke(randomRgb[0], randomRgb[1], randomRgb[2], strokeOuter.value());
