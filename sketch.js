@@ -23,7 +23,7 @@ let xincrement = 0.01;
 let amt = 0.0;
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(720, 720);
   angleMode(DEGREES);
   background('white');
 
