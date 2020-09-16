@@ -3,6 +3,11 @@ let symmetry = 6;
 let angle = 360 / symmetry;
 
 let play = true;
+// T = Triangles, E = Elipses, R = Rectangles,
+
+let e = false;
+let t = false;
+let r = false;
 
 let saveButton, clearButton, mouseButton, keyboardButton;
 let slider;
@@ -15,7 +20,7 @@ let xincrement = 0.01;
 let amt = 0.0;
 
 function setup() {
-  createCanvas(920, 920);
+  createCanvas(800, 800);
   angleMode(DEGREES);
   background('white');
 
@@ -83,6 +88,8 @@ function sleep(milliseconds) {
 }
 
 function keyPressed() {
+  // T = Triangles, E = Elipses, R = Rectangles,
+
   if (keyCode == 80) { // p - pause
     play = !play;
   }
@@ -96,6 +103,15 @@ function keyPressed() {
       symmetry -= 1;
       angle = 360 / symmetry;
     }
+  }
+  else if (keyCode == 69) { // e
+    e = !e;
+  }
+  else if (keyCode == 82) { // r
+    r = !r;
+  }
+  else if (keyCode == 84){ // t
+    t = !t;
   }
 
 }
@@ -181,44 +197,42 @@ function draw() {
         rotate(angle);
         strokeWeight(sizeSlider.value());
         stroke(randomRgb[0], randomRgb[1], randomRgb[2], strokeOuter.value());
-
-        // SHAPES
-
         fill(lerpColor(from, to, amt));
 
+        // SHAPES
         if (mouseIsPressed) {
           line(mx, my, pmx, pmy);
         }
-
-        ellipse(n/2, n/2, mx, my);
-        //rect(n/2, n/2, mx, my);
-        //triangle(pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100,pmx+pmy+100)
-        //triangle(mx+my,mx+my,mx+my,mx+my,mx+my,mx+my)
-        //triangle(x1, y1, x2, y2, x3, y3)
+        if(e){
+          ellipse(n/2, n/2, mx, my);
+        }
+        if(t){
+          triangle(mx, 180, mx, 390, my, 290);
+        }
+        if(r){
+          rect(n/2, n/2, mx, my);
+        }
+        
         variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
-        //variableEllipse(mouseX/2, mouseY/2, pmouseX/2, pmouseY/2);
 
         push();
-
         scale(1, -1);
         fill(lerpColor(from, to, amt));
 
         // SHAPES
-
         if (mouseIsPressed) {
           line(mx, my, pmx, pmy);
         }
-
-        ellipse(n / 2, n / 2, mx, my);
-
-        // triangle(x, 180, x, 390, y, 290)
-        // x = x + speed
-        // y = y + speed
-        // if (y > width || x < 0) {
-        // speed = speed * -1
-        // triangle(pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy,pmx+pmy)
-        // rect(n/2, n/2, mx, my);
-        //variableEllipse(mouseX/2, mouseY/2, pmouseX/2, pmouseY/2);
+        if(e){
+          ellipse(n / 2, n / 2, mx, my);
+        }
+        if(t){
+          triangle(mx, 180, mx, 390, my, 290);
+        }
+        if(r){
+          rect(n/2, n/2, mx, my);
+        }
+        
         variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
         pop();
       }
