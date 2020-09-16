@@ -1,3 +1,5 @@
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 // Symmetry corresponding to the number of reflections. Change the number for different number of reflections 
 let symmetry = 6;
 let angle = 360 / symmetry;
