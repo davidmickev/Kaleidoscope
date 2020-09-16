@@ -83,8 +83,7 @@ function sleep(milliseconds) {
 }
 
 function keyPressed() {
-  //pause
-  if (keyCode == 80) {
+  if (keyCode == 80) { // p - pause
     play = !play;
   }
   //symmetry 
@@ -98,6 +97,7 @@ function keyPressed() {
       angle = 360 / symmetry;
     }
   }
+
 }
 
 function getRandomRgb() {
