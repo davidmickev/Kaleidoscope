@@ -10,7 +10,6 @@ let t = false;
 let r = false;
 let v = true;
 
-
 let saveButton, clearButton, mouseButton, keyboardButton;
 let slider;
 
@@ -47,7 +46,7 @@ function setup() {
   sleepTime = createSlider(0, 200, 20, 2);
 
   strokeSlider = createButton('Stroke Border Opacity');
-  strokeOuter = createSlider(0, 125, 70, 1);
+  strokeOuter = createSlider(0, 125, 100, 1);
 
   strokeStartSlider = createButton('Fill Opacity(start)');
   strokeStart = createSlider(0, 125, 30, 1);
@@ -67,7 +66,7 @@ function setup() {
 
 // Save File Function
 function saveFile() {
-  save('fractal.jpg');
+  save('fractal.png');
 }
 
 // Clear Screen function
@@ -130,7 +129,24 @@ function keyPressed() {
     t = false;
     v = false;
   }
+  if (value = 83){
+    saveCanvas('fractal','png');
+  }
 }
+
+function mouseWheel(event) { 
+  scrollDelta = event.delta; 
+  if (scrollDelta > 0) { 
+    if (symmetry > 3) {
+      symmetry -= 1;
+      angle = 360 / symmetry;
+    }
+  }  
+else { 
+    symmetry += 1;
+    angle = 360 / symmetry;
+  } 
+} 
 
 function getRandomRgb() {
   var num = Math.round(0xffffff * Math.random());
@@ -158,7 +174,6 @@ function star(x, y, radius1, radius2, npoints) {
 
 function variableEllipse(x, y, px, py) {
   let speed = abs(x - px) + abs(y - py);
-  //stroke(speed);
   ellipse(x, y, speed, speed);
 }
 
