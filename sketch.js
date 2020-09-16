@@ -10,6 +10,7 @@ let t = false;
 let r = false;
 let v = true;
 
+
 let saveButton, clearButton, mouseButton, keyboardButton;
 let slider;
 
@@ -120,7 +121,7 @@ function keyPressed() {
     t = true;
     v = true;
   }
-  else if (keyCode == 65){ // a
+  else if (keyCode == 70){ // a
     e = false;
     r = false;
     t = false;
