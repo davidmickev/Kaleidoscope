@@ -115,6 +115,9 @@ function keyPressed() {
   else if (keyCode == 84){ // t
     t = !t;
   }
+  else if (keyCode == 86){ // v
+    v = !v;
+  }
   else if (keyCode == 65){ // a
     e = true;
     r = true;
