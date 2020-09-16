@@ -8,6 +8,7 @@ let play = true;
 let e = false;
 let t = false;
 let r = false;
+let v = true;
 
 let saveButton, clearButton, mouseButton, keyboardButton;
 let slider;
@@ -114,9 +115,16 @@ function keyPressed() {
     t = !t;
   }
   else if (keyCode == 65){ // a
-    e = !e;
-    r = !r;
-    t = !t;
+    e = true;
+    r = true;
+    t = true;
+    v = true;
+  }
+  else if (keyCode == 65){ // a
+    e = false;
+    r = false;
+    t = false;
+    v = false;
   }
 }
 
@@ -205,8 +213,9 @@ function draw() {
         if(r){
           rect(n/2, n/2, mx, my);
         }
-        
-        variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
+        if(v){
+          variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
+        }
 
         push();
         scale(1, -1);
@@ -225,8 +234,9 @@ function draw() {
         if(r){
           rect(n/2, n/2, mx, my);
         }
-        
-        variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
+        if(v){
+          variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
+        }
         pop();
       }
     }
