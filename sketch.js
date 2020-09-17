@@ -64,6 +64,9 @@ function setup() {
 
   noiseSlider2 = createButton('Noise Incriment');
   noiseIncriment = createSlider(0, 1, .01, .01);
+
+  textSize(32);
+  text('word', 10, 30);
 }
 
 // Save File Function
@@ -96,6 +99,11 @@ function keyPressed() {
   if (keyCode == 80) { // p - pause
     play = !play;
   }
+
+  if (value == 83){ // s save
+    saveCanvas('fractal','png');
+  }
+  
   //symmetry 
   else if (keyCode == 90) { // z
     symmetry += 1;
@@ -131,9 +139,7 @@ function keyPressed() {
     t = false;
     v = false;
   }
-  if (value = 83){
-    saveCanvas('fractal','png');
-  }
+  
 }
 
 function mouseWheel(event) { 
@@ -210,10 +216,7 @@ function draw() {
 
       // With each cycle, increment xoff
       xoff += xincrement;
-      
-      print("real: "+ xoff + "and: ", xincrement);
-      //if(xoff )
-      
+
       // IMAGE Draw
       for (let i = 0; i < symmetry; i++) {
         rotate(angle);
