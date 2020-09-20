@@ -100,10 +100,6 @@ function keyPressed() {
     play = !play;
   }
 
-  if (value == 83){ // s save
-    saveCanvas('fractal','png');
-  }
-  
   //symmetry 
   else if (keyCode == 90) { // z
     symmetry += 1;
@@ -139,7 +135,10 @@ function keyPressed() {
     t = false;
     v = false;
   }
-  
+
+  else if (value == 83){ // s save
+    saveCanvas('fractal','png');
+  }
 }
 
 function mouseWheel(event) { 
@@ -200,7 +199,7 @@ function draw() {
       let pmx = pmouseX - width / 2;
       let pmy = pmouseY - height / 2;
 
-      //random color and all opacities
+      // random color and all opacities
       let from = color(randomRgb2[0], randomRgb2[1], randomRgb2[2], strokeStart.value());
       let to = color(randomRgb3[0], randomRgb3[1], randomRgb3[2], strokeEnd.value());
 
@@ -212,12 +211,11 @@ function draw() {
       }
       amt += colorAmount.value();
 
+      // noise for shapes
       let n = noise(xoff) * width; 
-
-      // With each cycle, increment xoff
       xoff += xincrement;
 
-      // IMAGE Draw
+      // The kaleidoscope math and draw
       for (let i = 0; i < symmetry; i++) {
         rotate(angle);
         strokeWeight(sizeSlider.value());
